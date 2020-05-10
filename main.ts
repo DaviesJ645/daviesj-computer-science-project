@@ -1,48 +1,39 @@
-controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    Secondary_Weapon = sprites.create(img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . 6 . . . . . . . . 
-. . . . . . 6 9 6 . . . . . . . 
-. . . . . . 6 9 6 . . . . . . . 
-. . . . . . 6 9 6 . . . . . . . 
-. . . . . . 6 9 6 . . . . . . . 
-. . . . . . 6 9 6 . . . . . . . 
-. . . . . . 6 9 6 . . . . . . . 
-. . . . . . . 6 . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-`, SpriteKind.Projectile)
-    Primary_Weapon.destroy()
+namespace SpriteKind {
+    export const enemy_projectile = SpriteKind.create()
+    export const friendly_projectile = SpriteKind.create()
+}
+sprites.onOverlap(SpriteKind.friendly_projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
+    info.changeScoreBy(1)
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    Primary_Weapon = sprites.create(img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . 4 4 4 . . . . . . . 
-. . . . . 4 4 2 4 4 . . . . . . 
-. . . . . 4 2 4 2 4 . . . . . . 
-. . . . . 4 4 2 4 4 . . . . . . 
-. . . . . . 4 4 4 . . . . . . . 
+    Primary = sprites.createProjectileFromSprite(img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
-`, SpriteKind.Projectile)
-    Secondary_Weapon.destroy()
+. . . . . . . 9 . . . . . . . . 
+. . . . . . 9 6 9 . . . . . . . 
+. . . . . . 9 6 9 . . . . . . . 
+. . . . . . 9 6 9 . . . . . . . 
+. . . . . . . 9 . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`, Player_1, 0, -10)
+    Primary.setKind(SpriteKind.friendly_projectile)
 })
-let Primary_Weapon: Sprite = null
-let Secondary_Weapon: Sprite = null
-let Player_1 = sprites.create(img`
+sprites.onOverlap(SpriteKind.enemy_projectile, SpriteKind.Player, function (sprite, otherSprite) {
+    info.changeLifeBy(-1)
+})
+let enemy_projectile_1: Sprite = null
+let enemy_projectile_2: Sprite = null
+let Primary: Sprite = null
+let Player_1: Sprite = null
+Player_1 = sprites.create(img`
 . . . . . . f f f f . . . . . . 
 . . . . f f f 2 2 f f f . . . . 
 . . . f f f 2 2 2 2 f f f . . . 
@@ -60,7 +51,8 @@ let Player_1 = sprites.create(img`
 . . . . . f f f f f f . . . . . 
 . . . . . f f . . f f . . . . . 
 `, SpriteKind.Player)
-let mySprite2 = sprites.create(img`
+info.setScore(0)
+let Boss_level_1 = sprites.create(img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
@@ -78,8 +70,62 @@ let mySprite2 = sprites.create(img`
 . 2 . 2 . 2 . 2 . 2 . 2 . 2 . 2 
 . f . f . f . f . f . f . f . f 
 `, SpriteKind.Enemy)
-mySprite2.setPosition(78, 7)
+Boss_level_1.setPosition(78, 7)
 Player_1.setFlag(SpriteFlag.StayInScreen, false)
 controller.moveSprite(Player_1)
-scene.setBackgroundColor(0)
-info.setLife(3)
+scene.setBackgroundColor(13)
+Boss_level_1.setFlag(SpriteFlag.BounceOnWall, true)
+forever(function () {
+    if (Boss_level_1.x == -100 || Boss_level_1.x == 100) {
+        Boss_level_1.x += -5
+    }
+    pause(100)
+})
+forever(function () {
+    if (info.score() < 3) {
+        enemy_projectile_2 = sprites.createProjectileFromSprite(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . 2 4 2 . . . . . . . 
+. . . . . . 4 f 4 . . . . . . . 
+. . . . . . 2 4 2 . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`, Boss_level_1, 0, 100)
+        enemy_projectile_2.setKind(SpriteKind.enemy_projectile)
+        pause(100)
+    }
+})
+forever(function () {
+    if (info.score() > 3) {
+        enemy_projectile_1 = sprites.createProjectileFromSprite(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . e f e f e . . . . . . 
+. . . . . f f f f f . . . . . . 
+. . . . . e 4 4 4 e . . . . . . 
+. . . . . f f f f f . . . . . . 
+. . . . . e 4 4 4 e . . . . . . 
+. . . . . f f f f f . . . . . . 
+. . . . . e f e f e . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`, Boss_level_1, Math.randomRange(-100, 100), 100)
+        enemy_projectile_1.setKind(SpriteKind.enemy_projectile)
+    }
+    pause(500)
+})
