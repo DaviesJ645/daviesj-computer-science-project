@@ -1,6 +1,7 @@
 namespace SpriteKind {
     export const enemy_projectile = SpriteKind.create()
     export const friendly_projectile = SpriteKind.create()
+    export const temporary_message = SpriteKind.create()
 }
 sprites.onOverlap(SpriteKind.friendly_projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     info.changeScoreBy(1)
@@ -33,6 +34,7 @@ let enemy_projectile_1: Sprite = null
 let enemy_projectile_2: Sprite = null
 let Primary: Sprite = null
 let Player_1: Sprite = null
+scene.setBackgroundColor(13)
 Player_1 = sprites.create(img`
 . . . . . . f f f f . . . . . . 
 . . . . f f f 2 2 f f f . . . . 
@@ -52,6 +54,8 @@ Player_1 = sprites.create(img`
 . . . . . f f . . f f . . . . . 
 `, SpriteKind.Player)
 info.setScore(0)
+let input2 = game.askForString("ARE YOU READY ?", 1)
+pause(5000)
 let Boss_level_1 = sprites.create(img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
@@ -73,7 +77,6 @@ let Boss_level_1 = sprites.create(img`
 Boss_level_1.setPosition(78, 7)
 Player_1.setFlag(SpriteFlag.StayInScreen, false)
 controller.moveSprite(Player_1)
-scene.setBackgroundColor(13)
 Boss_level_1.setFlag(SpriteFlag.BounceOnWall, true)
 forever(function () {
     if (Boss_level_1.x == -100 || Boss_level_1.x == 100) {
