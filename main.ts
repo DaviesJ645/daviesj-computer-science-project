@@ -130,6 +130,50 @@ forever(function () {
     }
 })
 forever(function () {
+    if (info.score() > 200) {
+        enemy_projectile_2 = sprites.createProjectileFromSprite(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . 2 4 2 . . . . . . . 
+. . . . . . 4 f 4 . . . . . . . 
+. . . . . . 2 4 2 . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`, Boss_level_1, 0, 100)
+        enemy_projectile_2.setKind(SpriteKind.enemy_projectile)
+        pause(75)
+        enemy_projectile_1 = sprites.createProjectileFromSprite(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . e f e f e . . . . . . 
+. . . . . f f f f f . . . . . . 
+. . . . . e 4 4 4 e . . . . . . 
+. . . . . f f f f f . . . . . . 
+. . . . . e 4 4 4 e . . . . . . 
+. . . . . f f f f f . . . . . . 
+. . . . . e f e f e . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`, Boss_level_1, Math.randomRange(-100, 100), 100)
+        enemy_projectile_1.setKind(SpriteKind.enemy_projectile)
+        pause(450)
+    }
+})
+forever(function () {
     if (info.score() < 50) {
         Boss_level_1.setPosition(70, 7)
         enemy_projectile_1 = sprites.createProjectileFromSprite(img`
