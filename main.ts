@@ -91,6 +91,11 @@ Player_1.setFlag(SpriteFlag.StayInScreen, true)
 controller.moveSprite(Player_1)
 Boss_level_1.setFlag(SpriteFlag.BounceOnWall, true)
 forever(function () {
+    if (info.score() > 500) {
+        game.over(true)
+    }
+})
+forever(function () {
     if (info.score() > 50) {
         for (let index = 0; index < 40; index++) {
             Boss_level_1.x += 3
@@ -103,6 +108,50 @@ forever(function () {
         }
     } else {
     	
+    }
+})
+forever(function () {
+    if (info.score() > 250) {
+        enemy_projectile_2 = sprites.createProjectileFromSprite(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . 2 4 2 . . . . . . . 
+. . . . . . 4 f 4 . . . . . . . 
+. . . . . . 2 4 2 . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`, Boss_level_1, 0, 100)
+        enemy_projectile_2.setKind(SpriteKind.enemy_projectile)
+        pause(65)
+        enemy_projectile_1 = sprites.createProjectileFromSprite(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . e f e f e . . . . . . 
+. . . . . f f f f f . . . . . . 
+. . . . . e 4 4 4 e . . . . . . 
+. . . . . f f f f f . . . . . . 
+. . . . . e 4 4 4 e . . . . . . 
+. . . . . f f f f f . . . . . . 
+. . . . . e f e f e . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`, Boss_level_1, Math.randomRange(-100, 100), 100)
+        enemy_projectile_1.setKind(SpriteKind.enemy_projectile)
+        pause(400)
     }
 })
 forever(function () {
